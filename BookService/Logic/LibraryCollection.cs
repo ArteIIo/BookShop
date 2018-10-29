@@ -1,6 +1,7 @@
 ﻿using Logic.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Logic
 {
@@ -20,15 +21,36 @@ namespace Logic
         private List<Author> authors;
 
         /// <summary>
+        /// List with Genres
+        /// </summary>
+        private List<Genre> genres;
+
+        /// <summary>
+        /// List with Book-Author pairs
+        /// </summary>
+        private List<BookAuthor> bookAuthors;
+
+        /// <summary>
+        /// List with Book-Genre pairs
+        /// </summary>
+        private List<BookGenre> bookGenres;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="LibraryCollection"/> class.
         /// </summary>
         public LibraryCollection(IDataProvider data)
         {
             authors = new List<Author>();
             books = new List<Book>();
+            genres = new List<Genre>();
+            bookAuthors = new List<BookAuthor>();
+            bookGenres = new List<BookGenre>();
 
             data.SetAuthors(authors);
             data.SetBooks(books);
+            data.SetGenres(genres);
+            data.SetBooksAuthors(bookAuthors);
+            data.SetBooksGenres(bookGenres);
         }
 
         /// <summary>
@@ -145,7 +167,7 @@ namespace Logic
         public Author RemoveAuthor(int id)
         {
             Author author = authors[id];
-            books.RemoveAll(item => item.Author == author);
+            bookAuthors.RemoveAll(items => items.Author == author);
             authors.RemoveAt(id);
 
             return author;
@@ -160,7 +182,14 @@ namespace Logic
         /// or book's index out of range of their collection's count</exception>
         public void UpdateAuthor(int authorId, int bookId)
         {
-            books[bookId].Author = authors[authorId];
+            if (bookAuthors.FindAll(item => item.Author == authors[authorId]
+                                             && item.Book == books[bookId]).Count == 0)
+            {
+                bookAuthors.Add(new BookAuthor()
+                {
+                    Book = books[bookId], Author = authors[authorId]
+                });
+            }
         }
 
         /// <summary>
@@ -170,6 +199,118 @@ namespace Logic
         public void AddAuthor(Author author)
         {
             authors.Add(author);
+        }
+
+        /// <summary>
+        /// Search books by it's genre
+        /// </summary>
+        /// <param name="genreIndex">Index of the genre</param>
+        /// <returns>Collection of books</returns>
+        public IEnumerable<Book> SearchByGenre(int genreIndex)
+        {
+            var gettedBooks = from item in bookGenres
+                                           where item.Genre == genres[genreIndex]
+                                           select item.Book;
+
+            return gettedBooks.ToList();
+        }
+
+        /// <summary>
+        /// Search books by it's author
+        /// </summary>
+        /// <param name="authorIndex">Index of the genre</param>
+        /// <returns>Collection of books</returns>
+        public IEnumerable<Book> SearchByAuthor(int authorIndex)
+        {
+            var gettedBooks = from item in bookAuthors
+                              where item.Author == authors[authorIndex]
+                              select item.Book;
+
+            return gettedBooks.ToList();
+        }
+
+        /// <summary>
+        /// Get genre value by it's index
+        /// </summary>
+        /// <param name="id">Index of the selected genre</param>
+        /// <returns>genre by selected index</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Throw when index out of
+        /// list's count range</exception>
+        public Genre GetGenreByIndex(int id)
+        {
+            return genres[id];
+        }
+
+        /// <summary>
+        /// Return collection of genres
+        /// </summary>
+        /// <returns>IEnumerable collection</returns>
+        public IEnumerable<Genre> GetGenres()
+        {
+            return genres;
+        }
+
+        /// <summary>
+        /// Remove genre by it's index
+        /// </summary>
+        /// <param name="id">Index of the selected genre</param>
+        /// <returns>Deleted Genre</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Throw if index out of range</exception>
+        public Genre RemoveGenre(int id)
+        {
+            Genre deletedGenre = null;
+            if (bookGenres.FindAll(items => items.Genre == genres[id]).Count == 0)
+            {
+                deletedGenre = genres[id];
+                genres.RemoveAt(id);
+            }
+
+            return deletedGenre;
+        }
+
+        /// <summary>
+        /// Get List of pairs Book-Author
+        /// </summary>
+        /// <returns>List of pairs Book-Author</returns>
+        public IEnumerable<BookAuthor> GetBookAuthors()
+        {
+            return bookAuthors;
+        }
+
+        /// <summary>
+        /// Get List of pairs Book-Genre
+        /// </summary>
+        /// <returns>List of pairs Book-Genre</returns>
+        public IEnumerable<BookGenre> GetBookGenres()
+        {
+            return bookGenres;
+        }
+
+        /// <summary>
+        /// Method which update genre reference of the selected book
+        /// </summary>
+        /// <param name="genreId">Genre's index</param>
+        /// <param name="bookId">Book's index</param>
+        public void UpdateGenre(int genreId, int bookId)
+        {
+            if (bookGenres.FindAll(item => item.Genre == genres[genreId]
+                                             && item.Book == books[bookId]).Count == 0)
+            {
+                bookGenres.Add(new BookGenre()
+                {
+                    Book = books[bookId],
+                    Genre = genres[genreId],
+                });
+            }
+        }
+
+        /// <summary>
+        /// Add new genre
+        /// </summary>
+        /// <param name="newGenre">New genre</param>
+        public void AddGenre(Genre newGenre)
+        {
+            genres.Add(newGenre);
         }
     }
 }

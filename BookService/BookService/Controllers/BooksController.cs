@@ -67,6 +67,48 @@ namespace BookService.Controllers
         }
 
         /// <summary>
+        ///  Get-method for a book by it's author
+        /// </summary>
+        /// <param name="id">Author's index</param>
+        /// <returns>Ok if there are books with such author</returns>
+        [HttpGet("search-author/{id}")]
+        public IActionResult GetByAuthor(int id)
+        {
+            IActionResult result;
+            try
+            {
+                result = Ok(library.SearchByAuthor(id));
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                result = NotFound();
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        ///  Get-method for a book by it's genre
+        /// </summary>
+        /// <param name="id">Genre's index</param>
+        /// <returns>Ok if there are books with such genre</returns>
+        [HttpGet("search-genre/{id}")]
+        public IActionResult GetByGenre(int id)
+        {
+            IActionResult result;
+            try
+            {
+                result = Ok(library.SearchByGenre(id));
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                result = NotFound();
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// A post method for creation of the new book
         /// </summary>
         /// <param name="book">Need book</param>
