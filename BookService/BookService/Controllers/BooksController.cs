@@ -1,5 +1,7 @@
 ﻿using System;
-using BookService.Models;
+using BookService;
+using Logic;
+using Logic.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookService.Controllers
@@ -15,15 +17,15 @@ namespace BookService.Controllers
         /// <summary>
         /// Service with books collection
         /// </summary>
-        private IBookCollection books;
+        private ILibrary library;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BooksController"/> class.
         /// </summary>
-        /// <param name="books">Service with book's collection</param>
-        public BooksController(IBookCollection books)
+        /// <param name="library">Service with book's collection</param>
+        public BooksController(ILibrary library)
         {
-            this.books = books;
+            this.library = library;
         }
 
         /// <summary>
@@ -34,12 +36,12 @@ namespace BookService.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            if (books == null)
+            if (library == null)
             {
                 return NotFound();
             }
 
-            return Ok(books.GetBooks());
+            return Ok(library.GetBooks());
         }
 
         /// <summary>
@@ -54,9 +56,9 @@ namespace BookService.Controllers
             IActionResult result;
             try
             {
-                result = Ok(books[id]);
+                result = Ok(library.GetBookByIndex(id));
             }
-            catch (IndexOutOfRangeException)
+            catch (ArgumentOutOfRangeException)
             {
                 result = NotFound();
             }
@@ -79,7 +81,7 @@ namespace BookService.Controllers
                 return BadRequest();
             }
 
-            books.Add(book);
+            library.AddBook(book);
 
             return CreatedAtAction("Get", new { id = book.Id }, book);
         }
@@ -104,13 +106,58 @@ namespace BookService.Controllers
                 }
                 else
                 {
-                    books[id] = book;
+                    library.SetBookByIndex(book, id);
                     result = CreatedAtAction("Get", new { id = book.Id }, book);
                 }
             }
-            catch (IndexOutOfRangeException)
+            catch (ArgumentOutOfRangeException)
             {
                 result = BadRequest();
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Update book's author
+        /// </summary>
+        /// <param name="authorId">Index of the author</param>
+        /// <param name="bookId">Index of the book</param>
+        /// <returns>Ok if operation was successful</returns>
+        [HttpPut("author-update/{authorId}/{bookId}")]
+        public IActionResult UpdateAuthor(int authorId, int bookId)
+        {
+            IActionResult result;
+            try
+            {
+                library.UpdateAuthor(authorId, bookId);
+                result = Ok();
+            }
+            catch (IndexOutOfRangeException)
+            {
+                result = NotFound();
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Remove book's author
+        /// </summary>
+        /// <param name=id">Index of the book</param>
+        /// <returns>Ok if operation was successful</returns>
+        [HttpPut("author-remove/{id}")]
+        public IActionResult DeleteAuthor(int id)
+        {
+            IActionResult result;
+            try
+            {
+                library.GetBookByIndex(id).RemoveAuthor();
+                result = Ok();
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                result = NotFound();
             }
 
             return result;
@@ -128,10 +175,10 @@ namespace BookService.Controllers
             IActionResult result;
             try
             {
-                Book deleted = books.Remove(id);
+                Book deleted = library.RemoveBook(id);
                 result = Ok(deleted);
             }
-            catch (IndexOutOfRangeException)
+            catch (ArgumentOutOfRangeException)
             {
                 result = NotFound();
             }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BookService
+namespace Logic.Models
 {
     /// <summary>
     /// Class with book model
@@ -22,6 +22,14 @@ namespace BookService
         /// <summary>
         /// Gets or sets book's author
         /// </summary>
-        public string Author { get; set; }
+        public Author Author { get; set; }
+
+        /// <summary>
+        /// Set book's author to null
+        /// </summary>
+        public void RemoveAuthor()
+        {
+            Author = null;
+        }
     }
 }

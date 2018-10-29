@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using BookService.Models;
+using Logic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +28,8 @@ namespace BookService
 
             ContainerBuilder builder = new ContainerBuilder();
             builder.Populate(services);
-            builder.RegisterType<BookCollection>().As<IBookCollection>().SingleInstance();
+            builder.RegisterType<DataProvider>().As<IDataProvider>();
+            builder.RegisterType<LibraryCollection>().As<ILibrary>().SingleInstance();
             ApplicationContainer = builder.Build();
 
             return new AutofacServiceProvider(ApplicationContainer);
