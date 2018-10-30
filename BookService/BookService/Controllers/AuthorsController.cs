@@ -31,7 +31,7 @@ namespace BookService.Controllers
         /// Get-method for all author's collection
         /// </summary>
         /// <returns>Ok if there is a service with author</returns>
-        // GET api/ Authors
+        // GET api/ authors
         [HttpGet]
         public IActionResult Get()
         {
@@ -48,7 +48,7 @@ namespace BookService.Controllers
         /// </summary>
         /// <param name="id">Index of the needed author</param>
         /// <returns>Ok if there is a author by such index</returns>
-        // GET api/ Authors/5
+        // GET api/ authors/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -89,8 +89,8 @@ namespace BookService.Controllers
         /// Update selected book
         /// </summary>
         /// <param name="id">Index of the selected book</param>
-        /// <param name="book">New book's values</param>
-        /// <returns>CreateAtAction result if book
+        /// <param name="author">New auhtor's values</param>
+        /// <returns>CreateAtAction result if author
         /// has been updated or bad request otherwise</returns>
         // PUT api/books/5
         [HttpPut("{id}")]
@@ -120,8 +120,8 @@ namespace BookService.Controllers
         /// <summary>
         /// Delete selected book
         /// </summary>
-        /// <param name="id">Index of the selected book</param>
-        /// <returns>Ok if book has beed deleted</returns>
+        /// <param name="id">Index of the selected author</param>
+        /// <returns>Ok if author has beed deleted</returns>
         // DELETE api/books/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)

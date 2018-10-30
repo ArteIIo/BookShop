@@ -38,23 +38,14 @@ namespace Tests
         /// <summary>
         /// Method for mock config
         /// </summary>
-        /// <param name="books">List of books</param>
-        /// <param name="authors">List of authors</param>
         /// <returns>Configured mock</returns>
         protected Mock<IDataProvider> SetMock()
         {
             Mock<IDataProvider> data = new Mock<IDataProvider>();
-            data.Setup(p => p.SetAuthors(It.IsAny<List<Author>>()))
-                .Callback((List<Author> items) =>
-                {
-                    items.AddRange(authors);
-                });
-            data.Setup(p => p.SetBooks(It.IsAny<List<Book>>()))
-                .Callback((List<Book> items) =>
-                {
-                    items.AddRange(books);
-                });
-            ILibrary library = new LibraryCollection(data.Object);
+
+            data.Setup(p => p.GetAuthors()).Returns(authors);
+
+            data.Setup(p => p.GetBooks()).Returns(books);
 
             return data;
         }

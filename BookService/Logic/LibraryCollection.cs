@@ -24,11 +24,8 @@ namespace Logic
         /// </summary>
         public LibraryCollection(IDataProvider data)
         {
-            authors = new List<Author>();
-            books = new List<Book>();
-
-            data.SetAuthors(authors);
-            data.SetBooks(books);
+            authors = new List<Author>(data.GetAuthors());
+            books = new List<Book>(data.GetBooks());
         }
 
         /// <summary>

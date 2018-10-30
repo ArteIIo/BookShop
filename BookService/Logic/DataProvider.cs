@@ -39,21 +39,21 @@ namespace Logic
         }
 
         /// <summary>
-        /// Set list of authors
+        /// Get book's list
         /// </summary>
-        /// <param name="authors">List to fill</param>
-        public void SetAuthors(List<Author> authors)
+        /// <returns>Book's list</returns>
+        public IEnumerable<Book> GetBooks()
         {
-            authors.AddRange(this.authors);
+            return books;
         }
 
         /// <summary>
-        /// Set list of books
+        /// Get author's list
         /// </summary>
-        /// <param name="books">List to fill</param>
-        public void SetBooks(List<Book> books)
+        /// <returns>Author's list</returns>
+        public IEnumerable<Author> GetAuthors()
         {
-            books.AddRange(this.books);
+            return authors;
         }
     }
 }

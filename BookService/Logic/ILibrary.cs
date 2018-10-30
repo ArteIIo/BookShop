@@ -19,7 +19,7 @@ namespace Logic
         /// </summary>
         int AuthorsCount { get; }
 
-        /*=======================Methods for author's part=======================*/
+        #region Authors Method
 
         /// <summary>
         /// Get author value by it's index
@@ -58,7 +58,10 @@ namespace Logic
         /// </summary>
         /// <param name="author">New author</param>
         void AddAuthor(Author author);
-        /*=======================Methods for book's part=======================*/
+
+        #endregion
+
+        #region Book Method
 
         /// <summary>
         /// Get book value by it's index
@@ -104,5 +107,7 @@ namespace Logic
         /// <param name="authorId">Author's index</param>
         /// <param name="bookId">Book's index</param>
         void UpdateAuthor(int authorId, int bookId);
+
+        #endregion
     }
 }

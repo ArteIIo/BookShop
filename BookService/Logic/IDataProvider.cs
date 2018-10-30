@@ -9,15 +9,15 @@ namespace Logic
     public interface IDataProvider
     {
         /// <summary>
-        /// Set list of books
+        /// Get book's list
         /// </summary>
-        /// <param name="books">List to fill</param>
-        void SetBooks(List<Book> books);
+        /// <returns>Book's list</returns>
+        IEnumerable<Book> GetBooks();
 
         /// <summary>
-        /// Set list of authors
+        /// Get author's list
         /// </summary>
-        /// <param name="authors">List to fill</param>
-        void SetAuthors(List<Author> authors);
+        /// <returns>Author's list</returns>
+        IEnumerable<Author> GetAuthors();
     }
 }
