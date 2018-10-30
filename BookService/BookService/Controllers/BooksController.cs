@@ -1,5 +1,4 @@
 ﻿using System;
-using BookService;
 using Logic;
 using Logic.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +7,7 @@ namespace BookService.Controllers
 {
     /// <summary>
     /// Controller for CRUD opertions
-    /// with biooks for Task1
+    /// with books for Task1
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]

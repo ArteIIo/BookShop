@@ -3,12 +3,24 @@ using System.Collections.Generic;
 
 namespace Logic
 {
+    /// <summary>
+    /// Clas for providing data to Service
+    /// </summary>
     public class DataProvider : IDataProvider
     {
+        /// <summary>
+        /// List of books
+        /// </summary>
         private List<Book> books;
 
+        /// <summary>
+        /// List of authors
+        /// </summary>
         private List<Author> authors;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataProvider"/> class.
+        /// </summary>
         public DataProvider()
         {
             authors = new List<Author>()
@@ -26,11 +38,19 @@ namespace Logic
             };
         }
 
+        /// <summary>
+        /// Set list of authors
+        /// </summary>
+        /// <param name="authors">List to fill</param>
         public void SetAuthors(List<Author> authors)
         {
             authors.AddRange(this.authors);
         }
 
+        /// <summary>
+        /// Set list of books
+        /// </summary>
+        /// <param name="books">List to fill</param>
         public void SetBooks(List<Book> books)
         {
             books.AddRange(this.books);

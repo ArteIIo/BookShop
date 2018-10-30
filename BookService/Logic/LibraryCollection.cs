@@ -32,10 +32,10 @@ namespace Logic
         }
 
         /// <summary>
-        /// Get book value by it's index
+        /// Get auhtor value by it's index
         /// </summary>
-        /// <param name="id">Index of the selected book</param>
-        /// <returns>Book by selected index</returns>
+        /// <param name="id">Index of the selected auhtor</param>
+        /// <returns>Auhtor by selected index</returns>
         /// <exception cref="IndexOutOfRangeException">Throw when index out of
         /// list's count range</exception>
         public Author GetAuthorByIndex(int id)
@@ -44,7 +44,7 @@ namespace Logic
         }
 
         /// <summary>
-        /// Get author value by it's index
+        /// Get book value by it's index
         /// </summary>
         /// <param name="id">Index of the selected book</param>
         /// <returns>author by selected index</returns>

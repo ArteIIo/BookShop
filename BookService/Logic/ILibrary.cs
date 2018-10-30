@@ -9,7 +9,6 @@ namespace Logic
     /// </summary>
     public interface ILibrary
     {
-
         /// <summary>
         /// Gets size of the book's collection
         /// </summary>

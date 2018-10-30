@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Logic;
 using Logic.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookService.Controllers
 {
+    /// <summary>
+    /// Controller for CRUD opertions
+    /// with authors
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class AuthorsController : ControllerBase
@@ -31,7 +31,7 @@ namespace BookService.Controllers
         /// Get-method for all author's collection
         /// </summary>
         /// <returns>Ok if there is a service with author</returns>
-        // GET api/authors
+        // GET api/ Authors
         [HttpGet]
         public IActionResult Get()
         {
@@ -48,7 +48,7 @@ namespace BookService.Controllers
         /// </summary>
         /// <param name="id">Index of the needed author</param>
         /// <returns>Ok if there is a author by such index</returns>
-        // GET api/authors/5
+        // GET api/ Authors/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -71,7 +71,7 @@ namespace BookService.Controllers
         /// <param name="author">Need author</param>
         /// <returns>CreateAtAction result if author
         /// has been created or bad request otherwise</returns>
-        // POST api/authors
+        // POST api/ Authors
         [HttpPost]
         public IActionResult Post([FromBody] Author author)
         {
