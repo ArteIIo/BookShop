@@ -61,17 +61,17 @@ namespace Tests
             };
             bookAuthors = new List<BookAuthor>()
             {
-                new BookAuthor() { Book = books[0], Author = authors[0] },
-                new BookAuthor() { Book = books[0], Author = authors[1] },
-                new BookAuthor() { Book = books[1], Author = authors[2] },
-                new BookAuthor() { Book = books[1], Author = authors[1] },
+                new BookAuthor() { BookIndex = 0, AuthorIndex = 0 },
+                new BookAuthor() { BookIndex = 0, AuthorIndex = 1 },
+                new BookAuthor() { BookIndex = 1, AuthorIndex = 2 },
+                new BookAuthor() { BookIndex = 1, AuthorIndex = 1 },
             };
             bookGenres = new List<BookGenre>()
             {
-                new BookGenre() { Book = books[0], Genre = genres[0] },
-                new BookGenre() { Book = books[0], Genre = genres[1] },
-                new BookGenre() { Book = books[1], Genre = genres[2] },
-                new BookGenre() { Book = books[1], Genre = genres[1] }
+                new BookGenre() { BookIndex = 0, GenreIndex = 0 },
+                new BookGenre() { BookIndex = 0, GenreIndex = 1 },
+                new BookGenre() { BookIndex = 1, GenreIndex = 2 },
+                new BookGenre() { BookIndex = 1, GenreIndex = 1 }
             };
         }
 

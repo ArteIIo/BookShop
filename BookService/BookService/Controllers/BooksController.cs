@@ -1,5 +1,5 @@
 ﻿using System;
-using BookService;
+using System.Collections.Generic;
 using Logic;
 using Logic.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +8,7 @@ namespace BookService.Controllers
 {
     /// <summary>
     /// Controller for CRUD opertions
-    /// with biooks for Task1
+    /// with books
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
@@ -184,7 +184,7 @@ namespace BookService.Controllers
         }
 
         /// <summary>
-        /// Update genre's author
+        /// Update book's genre
         /// </summary>
         /// <param name="genreId">Index of the genre</param>
         /// <param name="bookId">Index of the book</param>

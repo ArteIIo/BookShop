@@ -122,7 +122,7 @@ namespace Tests
             ILibrary library = new LibraryCollection(data.Object);
 
             // Act
-            bookAuthors.RemoveAll(item => item.Author == authors[0]);
+            bookAuthors.RemoveAll(item => item.AuthorIndex == 0);
             authors.RemoveAt(0);
             library.RemoveAuthor(0);
 

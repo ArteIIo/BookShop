@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookService.Controllers
 {
+    /// <summary>
+    /// Controller for author
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class AuthorsController : ControllerBase
@@ -86,13 +89,13 @@ namespace BookService.Controllers
         }
 
         /// <summary>
-        /// Update selected book
+        /// Update selected author
         /// </summary>
-        /// <param name="id">Index of the selected book</param>
+        /// <param name="id">Index of the selected author</param>
         /// <param name="author">New author's values</param>
-        /// <returns>CreateAtAction result if book
+        /// <returns>CreateAtAction result if author
         /// has been updated or bad request otherwise</returns>
-        // PUT api/author/5
+        // PUT api/authors/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Author author)
         {
@@ -118,10 +121,10 @@ namespace BookService.Controllers
         }
 
         /// <summary>
-        /// Delete selected book
+        /// Delete selected author
         /// </summary>
-        /// <param name="id">Index of the selected book</param>
-        /// <returns>Ok if book has beed deleted</returns>
+        /// <param name="id">Index of the selected author</param>
+        /// <returns>Ok if author has beed deleted</returns>
         // DELETE api/author/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)

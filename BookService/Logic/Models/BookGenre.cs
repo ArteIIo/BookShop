@@ -10,12 +10,12 @@ namespace Logic.Models
         /// <summary>
         /// Gets or sets book
         /// </summary>
-        public Book Book { get; set; }
+        public int BookIndex { get; set; }
 
         /// <summary>
         /// Gets or sets genre
         /// </summary>
-        public Genre Genre { get; set; }
+        public int GenreIndex { get; set; }
 
         /// <summary>
         /// Override of object.Equal
@@ -28,7 +28,7 @@ namespace Logic.Models
             if (obj != null && GetType() == obj.GetType())
             {
                 BookGenre other = (BookGenre)obj;
-                return Book.Equals(other.Book) && Genre.Equals(other.Genre);
+                return BookIndex.Equals(other.BookIndex) && GenreIndex.Equals(other.GenreIndex);
             }
 
             return isEqual;
@@ -40,7 +40,7 @@ namespace Logic.Models
         /// <returns>HashCode of the object</returns>
         public override int GetHashCode()
         {
-            return Tuple.Create(Book, Genre).GetHashCode();
+            return BookIndex ^ GenreIndex;
         }
     }
 }

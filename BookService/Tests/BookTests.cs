@@ -163,7 +163,7 @@ namespace Tests
             ILibrary library = new LibraryCollection(data.Object);
 
             // Act
-            bookAuthors.Add(new BookAuthor() { Book = books[0], Author = authors[2] });
+            bookAuthors.Add(new BookAuthor() { BookIndex = 0, AuthorIndex = 2 });
             library.UpdateAuthor(2, 0);
 
             // Assert
@@ -182,7 +182,7 @@ namespace Tests
             ILibrary library = new LibraryCollection(data.Object);
 
             // Act
-            bookGenres.Add(new BookGenre() { Book = books[0], Genre = genres[2] });
+            bookGenres.Add(new BookGenre() { BookIndex = 0, GenreIndex = 2 });
             library.UpdateGenre(2, 0);
 
             // Assert
@@ -202,8 +202,8 @@ namespace Tests
 
             // Act
             IEnumerable<Book> expectedBooks = from item in bookGenres
-                                      where item.Genre == genres[0]
-                                      select item.Book;
+                                      where item.GenreIndex == 0
+                                      select books[item.BookIndex];
             IEnumerable<Book> actualBooks = library.SearchByGenre(0);
 
             // Assert
@@ -223,8 +223,8 @@ namespace Tests
 
             // Act
             IEnumerable<Book> expectedBooks = from item in bookAuthors
-                                              where item.Author == authors[0]
-                                              select item.Book;
+                                              where item.AuthorIndex == 0
+                                              select books[item.BookIndex];
             IEnumerable<Book> actualBooks = library.SearchByAuthor(0);
 
             // Assert

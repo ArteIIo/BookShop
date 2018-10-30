@@ -169,7 +169,7 @@ namespace Logic
         public Author RemoveAuthor(int id)
         {
             Author author = authors[id];
-            bookAuthors.RemoveAll(items => items.Author == author);
+            bookAuthors.RemoveAll(items => authors[items.AuthorIndex] == author);
             authors.RemoveAt(id);
 
             return author;
@@ -184,12 +184,12 @@ namespace Logic
         /// or book's index out of range of their collection's count</exception>
         public void UpdateAuthor(int authorId, int bookId)
         {
-            if (bookAuthors.FindAll(item => item.Author == authors[authorId]
-                                             && item.Book == books[bookId]).Count == 0)
+            if (bookAuthors.FindAll(item => item.AuthorIndex == authorId
+                                             && item.BookIndex == bookId).Count == 0)
             {
                 bookAuthors.Add(new BookAuthor()
                 {
-                    Book = books[bookId], Author = authors[authorId]
+                    BookIndex = bookId, AuthorIndex = authorId
                 });
             }
         }
@@ -211,10 +211,10 @@ namespace Logic
         public IEnumerable<Book> SearchByGenre(int genreIndex)
         {
             var gettedBooks = from item in bookGenres
-                                           where item.Genre == genres[genreIndex]
-                                           select item.Book;
+                              where item.GenreIndex == genreIndex
+                              select books[item.BookIndex];
 
-            return gettedBooks.ToList();
+            return gettedBooks;
         }
 
         /// <summary>
@@ -225,10 +225,10 @@ namespace Logic
         public IEnumerable<Book> SearchByAuthor(int authorIndex)
         {
             var gettedBooks = from item in bookAuthors
-                              where item.Author == authors[authorIndex]
-                              select item.Book;
+                              where item.AuthorIndex == authorIndex
+                              select books[item.BookIndex];
 
-            return gettedBooks.ToList();
+            return gettedBooks;
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace Logic
         public Genre RemoveGenre(int id)
         {
             Genre deletedGenre = null;
-            if (bookGenres.FindAll(items => items.Genre == genres[id]).Count == 0)
+            if (bookGenres.FindAll(items => items.GenreIndex == id).Count == 0)
             {
                 deletedGenre = genres[id];
                 genres.RemoveAt(id);
@@ -295,13 +295,13 @@ namespace Logic
         /// <param name="bookId">Book's index</param>
         public void UpdateGenre(int genreId, int bookId)
         {
-            if (bookGenres.FindAll(item => item.Genre == genres[genreId]
-                                             && item.Book == books[bookId]).Count == 0)
+            if (bookGenres.FindAll(item => item.GenreIndex == genreId
+                                             && item.BookIndex == bookId).Count == 0)
             {
                 bookGenres.Add(new BookGenre()
                 {
-                    Book = books[bookId],
-                    Genre = genres[genreId],
+                    BookIndex = bookId,
+                    GenreIndex = genreId,
                 });
             }
         }

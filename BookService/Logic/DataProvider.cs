@@ -64,22 +64,22 @@ namespace Logic
 
             bookAuthors = new List<BookAuthor>()
             {
-                new BookAuthor() { Book = books[0], Author = authors[0] },
-                new BookAuthor() { Book = books[0], Author = authors[1] },
-                new BookAuthor() { Book = books[1], Author = authors[2] },
-                new BookAuthor() { Book = books[1], Author = authors[3] },
-                new BookAuthor() { Book = books[1], Author = authors[4] },
-                new BookAuthor() { Book = books[0], Author = authors[4] },
+                new BookAuthor() { BookIndex = 0, AuthorIndex = 0 },
+                new BookAuthor() { BookIndex = 0, AuthorIndex = 1 },
+                new BookAuthor() { BookIndex = 1, AuthorIndex = 2 },
+                new BookAuthor() { BookIndex = 1, AuthorIndex = 3 },
+                new BookAuthor() { BookIndex = 1, AuthorIndex = 4 },
+                new BookAuthor() { BookIndex = 0, AuthorIndex = 4 },
             };
 
             bookGenres = new List<BookGenre>()
             {
-                new BookGenre() { Book = books[0], Genre = genres[0] },
-                new BookGenre() { Book = books[0], Genre = genres[1] },
-                new BookGenre() { Book = books[1], Genre = genres[2] },
-                new BookGenre() { Book = books[1], Genre = genres[3] },
-                new BookGenre() { Book = books[1], Genre = genres[4] },
-                new BookGenre() { Book = books[0], Genre = genres[4] }
+                new BookGenre() { BookIndex = 0, GenreIndex = 0 },
+                new BookGenre() { BookIndex = 0, GenreIndex = 1 },
+                new BookGenre() { BookIndex = 1, GenreIndex = 2 },
+                new BookGenre() { BookIndex = 1, GenreIndex = 3 },
+                new BookGenre() { BookIndex = 1, GenreIndex = 4 },
+                new BookGenre() { BookIndex = 0, GenreIndex = 4 }
             };
 
             foreach(Book item in books)
