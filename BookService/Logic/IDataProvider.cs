@@ -1,8 +1,5 @@
 ﻿using Logic.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Logic
 {
@@ -12,33 +9,33 @@ namespace Logic
     public interface IDataProvider
     {
         /// <summary>
-        /// Set book's list
+        /// Get book's list
         /// </summary>
-        /// <param name="books">List of books</param>
-        void SetBooks(List<Book> books);
+        /// <returns>Book's list</returns>
+        IEnumerable<Book> GetBooks();
 
         /// <summary>
-        /// Set book's authors
+        /// Get author's list
         /// </summary>
-        /// <param name="authors">List of authors</param>
-        void SetAuthors(List<Author> authors);
+        /// <returns>Author's list</returns>
+        IEnumerable<Author> GetAuthors();
 
         /// <summary>
-        /// Set genre's list
+        /// Get genre's list
         /// </summary>
-        /// <param name="genres">List of genres</param>
-        void SetGenres(List<Genre> genres);
+        /// <returns>List of genres</returns>
+        IEnumerable<Genre> GetGenres();
 
         /// <summary>
         /// Set list of Book-Genre pairs
         /// </summary>
-        /// <param name="bookGenres">List of Book-Genre pairs</param>
-        void SetBooksGenres(List<BookGenre> bookGenres);
+        /// <returns>List of Book-Genres pairs</returns>
+        IEnumerable<BookGenre> GetBooksGenres();
 
         /// <summary>
-        /// Set list of Book-Author pairs
+        /// Get list of Book-Genre pairs
         /// </summary>
-        /// <param name="bookAuthors">List of Book-Author pairs</param>
-        void SetBooksAuthors(List<BookAuthor> bookAuthors);
+        /// <returns>List of Book-Author pairs</returns>
+        IEnumerable<BookAuthor> GetBooksAuthors();
     }
 }

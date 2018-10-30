@@ -89,10 +89,10 @@ namespace BookService.Controllers
         /// Update selected book
         /// </summary>
         /// <param name="id">Index of the selected book</param>
-        /// <param name="book">New book's values</param>
+        /// <param name="author">New author's values</param>
         /// <returns>CreateAtAction result if book
         /// has been updated or bad request otherwise</returns>
-        // PUT api/books/5
+        // PUT api/author/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Author author)
         {
@@ -122,7 +122,7 @@ namespace BookService.Controllers
         /// </summary>
         /// <param name="id">Index of the selected book</param>
         /// <returns>Ok if book has beed deleted</returns>
-        // DELETE api/books/5
+        // DELETE api/author/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

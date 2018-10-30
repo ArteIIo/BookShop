@@ -40,17 +40,11 @@ namespace Logic
         /// </summary>
         public LibraryCollection(IDataProvider data)
         {
-            authors = new List<Author>();
-            books = new List<Book>();
-            genres = new List<Genre>();
-            bookAuthors = new List<BookAuthor>();
-            bookGenres = new List<BookGenre>();
-
-            data.SetAuthors(authors);
-            data.SetBooks(books);
-            data.SetGenres(genres);
-            data.SetBooksAuthors(bookAuthors);
-            data.SetBooksGenres(bookGenres);
+            authors = new List<Author>(data.GetAuthors());
+            books = new List<Book>(data.GetBooks());
+            genres = new List<Genre>(data.GetGenres());
+            bookAuthors = new List<BookAuthor>(data.GetBooksAuthors());
+            bookGenres = new List<BookGenre>(data.GetBooksGenres());
         }
 
         /// <summary>
@@ -115,6 +109,14 @@ namespace Logic
         public int AuthorsCount
         {
             get { return authors.Count; }
+        }
+
+        /// <summary>
+        /// Gets size of the genre's collection
+        /// </summary>
+        public int GenresCount
+        {
+            get { return genres.Count; }
         }
 
         /// <summary>

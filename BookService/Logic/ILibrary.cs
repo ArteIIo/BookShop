@@ -20,7 +20,12 @@ namespace Logic
         /// </summary>
         int AuthorsCount { get; }
 
-        /*=======================Methods for author's part=======================*/
+        /// <summary>
+        /// Gets size of the genre's collection
+        /// </summary>
+        int GenresCount { get; }
+
+        #region Author Methods
 
         /// <summary>
         /// Get author value by it's index
@@ -59,7 +64,10 @@ namespace Logic
         /// </summary>
         /// <param name="author">New author</param>
         void AddAuthor(Author author);
-        /*=======================Methods for book's part=======================*/
+
+        #endregion
+
+        #region Book Methods
 
         /// <summary>
         /// Get book value by it's index
@@ -127,7 +135,9 @@ namespace Logic
         /// <returns>Collection of books</returns>
         IEnumerable<Book> SearchByAuthor(int authorIndex);
 
-        /*=======================Methods for genre's part=========================*/
+        #endregion
+
+        #region Genre Methods
 
         /// <summary>
         /// Get genre value by it's index
@@ -158,7 +168,9 @@ namespace Logic
         /// <exception cref="ArgumentOutOfRangeException">Throw if index out of range</exception>
         Genre RemoveGenre(int id);
 
-        /*==========================ExtraMethods for testing=============================*/
+        #endregion
+
+        #region Extra
 
         /// <summary>
         /// Get List of pairs Book-Author
@@ -171,5 +183,7 @@ namespace Logic
         /// </summary>
         /// <returns>List of pairs Book-Genre</returns>
         IEnumerable<BookGenre> GetBookGenres();
+
+        #endregion
     }
 }

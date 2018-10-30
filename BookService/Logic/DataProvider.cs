@@ -28,7 +28,6 @@ namespace Logic
         /// </summary>
         private List<BookAuthor> bookAuthors;
 
-
         /// <summary>
         /// List of Book-Genres pairs
         /// </summary>
@@ -105,48 +104,48 @@ namespace Logic
         }
 
         /// <summary>
-        /// Set book's authors
+        /// Get book's list
         /// </summary>
-        /// <param name="authors">List of authors</param>
-        public void SetAuthors(List<Author> authors)
+        /// <returns>Book's list</returns>
+        public IEnumerable<Book> GetBooks()
         {
-            authors.AddRange(this.authors);
+            return books;
         }
 
         /// <summary>
-        /// Set book's list
+        /// Get author's list
         /// </summary>
-        /// <param name="books">List of books</param>
-        public void SetBooks(List<Book> books)
+        /// <returns>Author's list</returns>
+        public IEnumerable<Author> GetAuthors()
         {
-            books.AddRange(this.books);
+            return authors;
         }
 
         /// <summary>
-        /// Set genre's list
+        /// Get genre's list
         /// </summary>
-        /// <param name="genres">List of genres</param>
-        public void SetGenres(List<Genre> genres)
+        /// <returns>List of genres</returns>
+        public IEnumerable<Genre> GetGenres()
         {
-            genres.AddRange(this.genres);
+            return genres;
         }
 
         /// <summary>
         /// Set list of Book-Genre pairs
         /// </summary>
-        /// <param name="bookGenres">List of Book-Genre pairs</param>
-        public void SetBooksGenres(List<BookGenre> bookGenres)
+        /// <returns>List of Book-Genres pairs</returns>
+        public IEnumerable<BookGenre> GetBooksGenres()
         {
-            bookGenres.AddRange(this.bookGenres);
+            return bookGenres;
         }
 
         /// <summary>
-        /// Set list of Book-Author pairs
+        /// Get list of Book-Genre pairs
         /// </summary>
-        /// <param name="bookAuthors">List of Book-Author pairs</param>
-        public void SetBooksAuthors(List<BookAuthor> bookAuthors)
+        /// <returns>List of Book-Author pairs</returns>
+        public IEnumerable<BookAuthor> GetBooksAuthors()
         {
-            bookAuthors.AddRange(this.bookAuthors);
+            return bookAuthors;
         }
     }
 }

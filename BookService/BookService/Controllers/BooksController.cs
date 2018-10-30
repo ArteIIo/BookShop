@@ -184,20 +184,21 @@ namespace BookService.Controllers
         }
 
         /// <summary>
-        /// Remove book's author
+        /// Update genre's author
         /// </summary>
-        /// <param name=id">Index of the book</param>
+        /// <param name="genreId">Index of the genre</param>
+        /// <param name="bookId">Index of the book</param>
         /// <returns>Ok if operation was successful</returns>
-        [HttpPut("author-remove/{id}")]
-        public IActionResult DeleteAuthor(int id)
+        [HttpPut("genre-update/{genreId}/{bookId}")]
+        public IActionResult UpdateGenre(int genreId, int bookId)
         {
             IActionResult result;
             try
             {
-                library.GetBookByIndex(id).RemoveAuthor();
+                library.UpdateGenre(genreId, bookId);
                 result = Ok();
             }
-            catch (ArgumentOutOfRangeException)
+            catch (IndexOutOfRangeException)
             {
                 result = NotFound();
             }
