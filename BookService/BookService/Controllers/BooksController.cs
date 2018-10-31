@@ -29,11 +29,11 @@ namespace BookService.Controllers
 
         /// <summary>
         /// Get-method for all book's collection
+        /// GET api/books
         /// </summary>
         /// <returns>Ok if there is a service with books</returns>
-        // GET api/books
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetBooks()
         {
             if (library == null)
             {
@@ -45,10 +45,10 @@ namespace BookService.Controllers
 
         /// <summary>
         /// Get-method for a book by it's index
+        /// GET api/books/5
         /// </summary>
         /// <param name="id">Index of the needed book</param>
         /// <returns>Ok if there is a book by such index</returns>
-        // GET api/books/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -67,11 +67,11 @@ namespace BookService.Controllers
 
         /// <summary>
         /// A post method for creation of the new book
+        /// POST api/books
         /// </summary>
         /// <param name="book">Need book</param>
         /// <returns>CreateAtAction result if book
         /// has been created or bad request otherwise</returns>
-        // POST api/books
         [HttpPost]
         public IActionResult Post([FromBody] Book book)
         {
@@ -87,12 +87,12 @@ namespace BookService.Controllers
 
         /// <summary>
         /// Update selected book
+        /// PUT api/books/5
         /// </summary>
         /// <param name="id">Index of the selected book</param>
         /// <param name="book">New book's values</param>
         /// <returns>CreateAtAction result if book
         /// has been updated or bad request otherwise</returns>
-        // PUT api/books/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Book book)
         {
@@ -164,12 +164,12 @@ namespace BookService.Controllers
 
         /// <summary>
         /// Delete selected book
+        /// DELETE api/books/5
         /// </summary>
         /// <param name="id">Index of the selected book</param>
         /// <returns>Ok if book has beed deleted</returns>
-        // DELETE api/books/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult DeleteBook(int id)
         {
             IActionResult result;
             try

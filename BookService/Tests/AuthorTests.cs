@@ -10,7 +10,7 @@ namespace Tests
     /// <summary>
     /// Class for testing Authors
     /// </summary>
-    public class AuthorTests : TestsBase
+    public class AuthorTests
     {
         /// <summary>
         /// Test for GetAuthorByIndex-method(Expected: exception)
@@ -22,8 +22,20 @@ namespace Tests
         public void Library_GetAuthorByIndex_Exception(int index)
         {
             // Arrage
-            InitLists();
-            Mock<IDataProvider> data = SetMock();
+            List<Author> authors = new List<Author>()
+            {
+                new Author() { Id = 0, Name = "Name0", Surname = "Surname0" }
+            };
+
+            List<Book> books = new List<Book>()
+            {
+                new Book() { Id = 0, Name = "Book0", Author = authors[0] }
+            };
+            Mock<IDataProvider> data = new Mock<IDataProvider>();
+
+            data.Setup(p => p.GetAuthors()).Returns(authors);
+
+            data.Setup(p => p.GetBooks()).Returns(books);
             ILibrary library = new LibraryCollection(data.Object);
 
             // Act
@@ -36,11 +48,23 @@ namespace Tests
         /// Test for GetAuthorByIndex-method
         /// </summary>
         [Fact]
-        public void Library_GetAuthorByIndex()
+        public void Library_GetAuthorByIndex_Correct()
         {
             // Arrage
-            InitLists();
-            Mock<IDataProvider> data = SetMock();
+            List<Author> authors = new List<Author>()
+            {
+                new Author() { Id = 0, Name = "Name0", Surname = "Surname0" }
+            };
+
+            List<Book> books = new List<Book>()
+            {
+                new Book() { Id = 0, Name = "Book0", Author = authors[0] }
+            };
+            Mock<IDataProvider> data = new Mock<IDataProvider>();
+
+            data.Setup(p => p.GetAuthors()).Returns(authors);
+
+            data.Setup(p => p.GetBooks()).Returns(books);
             ILibrary library = new LibraryCollection(data.Object);
 
             // Act
@@ -61,8 +85,20 @@ namespace Tests
         {
             // Arrage
             Author newAuthor = new Author();
-            InitLists();
-            Mock<IDataProvider> data = SetMock();
+            List<Author> authors = new List<Author>()
+            {
+                new Author() { Id = 0, Name = "Name0", Surname = "Surname0" }
+            };
+
+            List<Book> books = new List<Book>()
+            {
+                new Book() { Id = 0, Name = "Book0", Author = authors[0] }
+            };
+            Mock<IDataProvider> data = new Mock<IDataProvider>();
+
+            data.Setup(p => p.GetAuthors()).Returns(authors);
+
+            data.Setup(p => p.GetBooks()).Returns(books);
             ILibrary library = new LibraryCollection(data.Object);
 
             // Act
@@ -75,11 +111,23 @@ namespace Tests
         /// Test for SetAuthorByIndex-method
         /// </summary>
         [Fact]
-        public void Library_SetAuthorByIndex()
+        public void Library_SetAuthorByIndex_Correct()
         {
             // Arrage
-            InitLists();
-            Mock<IDataProvider> data = SetMock();
+            List<Author> authors = new List<Author>()
+            {
+                new Author() { Id = 0, Name = "Name0", Surname = "Surname0" }
+            };
+
+            List<Book> books = new List<Book>()
+            {
+                new Book() { Id = 0, Name = "Book0", Author = authors[0] }
+            };
+            Mock<IDataProvider> data = new Mock<IDataProvider>();
+
+            data.Setup(p => p.GetAuthors()).Returns(authors);
+
+            data.Setup(p => p.GetBooks()).Returns(books);
             ILibrary library = new LibraryCollection(data.Object);
 
             // Act
@@ -100,8 +148,20 @@ namespace Tests
         public void Library_RemoveAuthor_Exception(int index)
         {
             // Arrage
-            InitLists();
-            Mock<IDataProvider> data = SetMock();
+            List<Author> authors = new List<Author>()
+            {
+                new Author() { Id = 0, Name = "Name0", Surname = "Surname0" }
+            };
+
+            List<Book> books = new List<Book>()
+            {
+                new Book() { Id = 0, Name = "Book0", Author = authors[0] }
+            };
+            Mock<IDataProvider> data = new Mock<IDataProvider>();
+
+            data.Setup(p => p.GetAuthors()).Returns(authors);
+
+            data.Setup(p => p.GetBooks()).Returns(books);
             ILibrary library = new LibraryCollection(data.Object);
 
             // Act
@@ -114,11 +174,23 @@ namespace Tests
         /// Test for RemoveAuthor-method
         /// </summary>
         [Fact]
-        public void Library_RemoveAutor()
+        public void Library_RemoveAutor_Correct()
         {
             // Arrage
-            InitLists();
-            Mock<IDataProvider> data = SetMock();
+            List<Author> authors = new List<Author>()
+            {
+                new Author() { Id = 0, Name = "Name0", Surname = "Surname0" }
+            };
+
+            List<Book> books = new List<Book>()
+            {
+                new Book() { Id = 0, Name = "Book0", Author = authors[0] }
+            };
+            Mock<IDataProvider> data = new Mock<IDataProvider>();
+
+            data.Setup(p => p.GetAuthors()).Returns(authors);
+
+            data.Setup(p => p.GetBooks()).Returns(books);
             ILibrary library = new LibraryCollection(data.Object);
 
             // Act
@@ -135,11 +207,23 @@ namespace Tests
         /// Test for AddAuthor-method
         /// </summary>
         [Fact]
-        public void Library_AddAuthor()
+        public void Library_AddAuthor_Correct()
         {
             // Arrage
-            InitLists();
-            Mock<IDataProvider> data = SetMock();
+            List<Author> authors = new List<Author>()
+            {
+                new Author() { Id = 0, Name = "Name0", Surname = "Surname0" }
+            };
+
+            List<Book> books = new List<Book>()
+            {
+                new Book() { Id = 0, Name = "Book0", Author = authors[0] }
+            };
+            Mock<IDataProvider> data = new Mock<IDataProvider>();
+
+            data.Setup(p => p.GetAuthors()).Returns(authors);
+
+            data.Setup(p => p.GetBooks()).Returns(books);
             ILibrary library = new LibraryCollection(data.Object);
             Author newAuthor = new Author() { Id = 0, Name = "Name10", Surname = "Surname10" };
 

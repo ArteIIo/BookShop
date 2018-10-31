@@ -37,7 +37,13 @@ namespace Logic
         /// list's count range</exception>
         public Author GetAuthorByIndex(int id)
         {
-            return authors[id];
+            Author author = authors.Find(authors => authors.Id == id);
+            if (author == null)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            return author;
         }
 
         /// <summary>
@@ -49,31 +55,41 @@ namespace Logic
         /// list's count range</exception>
         public Book GetBookByIndex(int id)
         {
-            return books[id];
+            Book book = books.Find(item => item.Id == id);
+            if (book == null)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            return book;
         }
 
         /// <summary>
         /// Set author value by it's index
         /// </summary>
-        /// <param name="author">New author</param>
+        /// <param name="newAuthor">New author</param>
         /// <param name="id">Index of the new book</param>
         /// /// <exception cref="IndexOutOfRangeException">Throw when index out of
         /// list's count range</exception>
-        public void SetAuthorByIndex(Author author, int id)
+        public void SetAuthorByIndex(Author newAuthor, int id)
         {
-            authors[id] = author;
+            Author author = authors.Find(item => item.Id == id);
+
+            authors[authors.IndexOf(author)] = newAuthor;
         }
 
         /// <summary>
         /// Set book value by it's index
         /// </summary>
-        /// <param name="book">New book</param>
+        /// <param name="newBook">New book</param>
         /// <param name="id">Index of the new book</param>
         /// /// <exception cref="IndexOutOfRangeException">Throw when index out of
         /// list's count range</exception>
-        public void SetBookByIndex(Book book, int id)
+        public void SetBookByIndex(Book newBook, int id)
         {
-            books[id] = book;
+            Book book = books.Find(item => item.Id == id);
+
+            books[books.IndexOf(book)] = newBook;
         }
 
         /// <summary>
@@ -115,11 +131,16 @@ namespace Logic
         /// </summary>
         /// <param name="id">Index of the selected book</param>
         /// <returns>Deleted book</returns>
-        /// <exception cref="System.IndexOutOfRangeException">Throw if index out of range</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Throw if index out of range</exception>
         public Book RemoveBook(int id)
         {
-            Book deleted = books[id];
-            books.RemoveAt(id);
+            Book deleted = books.Find(item => item.Id == id);
+            if (deleted == null)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            books.Remove(deleted);
 
             return deleted;
         }
@@ -141,7 +162,12 @@ namespace Logic
         /// <exception cref="ArgumentOutOfRangeException">Throw if index out of range</exception>
         public Author RemoveAuthor(int id)
         {
-            Author author = authors[id];
+            Author author = authors.Find(item => item.Id == id);
+            if (author == null)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
             books.RemoveAll(item => item.Author == author);
             authors.RemoveAt(id);
 

@@ -29,11 +29,11 @@ namespace BookService.Controllers
 
         /// <summary>
         /// Get-method for all author's collection
+        /// GET api/ authors
         /// </summary>
         /// <returns>Ok if there is a service with author</returns>
-        // GET api/ authors
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetAuthors()
         {
             if (library == null)
             {
@@ -45,12 +45,12 @@ namespace BookService.Controllers
 
         /// <summary>
         /// Get-method for a author by it's index
+        /// GET api/ authors/5
         /// </summary>
         /// <param name="id">Index of the needed author</param>
         /// <returns>Ok if there is a author by such index</returns>
-        // GET api/ authors/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetAuhtor(int id)
         {
             IActionResult result;
             try
@@ -67,11 +67,11 @@ namespace BookService.Controllers
 
         /// <summary>
         /// A post method for creation of the new author
+        /// POST api/ Authors
         /// </summary>
         /// <param name="author">Need author</param>
         /// <returns>CreateAtAction result if author
         /// has been created or bad request otherwise</returns>
-        // POST api/ Authors
         [HttpPost]
         public IActionResult Post([FromBody] Author author)
         {
@@ -87,12 +87,12 @@ namespace BookService.Controllers
 
         /// <summary>
         /// Update selected book
+        /// PUT api/books/5
         /// </summary>
         /// <param name="id">Index of the selected book</param>
         /// <param name="author">New auhtor's values</param>
         /// <returns>CreateAtAction result if author
         /// has been updated or bad request otherwise</returns>
-        // PUT api/books/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Author author)
         {
@@ -118,11 +118,11 @@ namespace BookService.Controllers
         }
 
         /// <summary>
-        /// Delete selected book
+        /// Delete selected author
+        /// DELETE api/authors/5
         /// </summary>
         /// <param name="id">Index of the selected author</param>
         /// <returns>Ok if author has beed deleted</returns>
-        // DELETE api/books/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
