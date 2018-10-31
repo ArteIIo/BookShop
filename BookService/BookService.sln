@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookService", "BookService\BookService.csproj", "{451BAC30-DA4E-4A3B-BB42-07C4F482C96D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookService", "BookService\BookService.csproj", "{451BAC30-DA4E-4A3B-BB42-07C4F482C96D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{8C3396EE-B094-4AC2-88F8-C80D0DB2B03E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "Logic\Logic.csproj", "{3817AC5C-A265-496B-A1EF-FF9E69F9F9E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{451BAC30-DA4E-4A3B-BB42-07C4F482C96D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{451BAC30-DA4E-4A3B-BB42-07C4F482C96D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{451BAC30-DA4E-4A3B-BB42-07C4F482C96D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C3396EE-B094-4AC2-88F8-C80D0DB2B03E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C3396EE-B094-4AC2-88F8-C80D0DB2B03E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C3396EE-B094-4AC2-88F8-C80D0DB2B03E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C3396EE-B094-4AC2-88F8-C80D0DB2B03E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3817AC5C-A265-496B-A1EF-FF9E69F9F9E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3817AC5C-A265-496B-A1EF-FF9E69F9F9E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3817AC5C-A265-496B-A1EF-FF9E69F9F9E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3817AC5C-A265-496B-A1EF-FF9E69F9F9E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

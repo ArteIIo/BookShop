@@ -1,27 +1,30 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BookService
+namespace Logic.Models
 {
     /// <summary>
-    /// Class with book model
+    /// Class with author model
     /// </summary>
-    public class Book
+    public class Author
     {
         /// <summary>
-        /// Gets or sets book's id
+        /// Gets or sets author's id
         /// </summary>
         [Required]
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or sets book's name
+        /// Gets or sets author's name
         /// </summary>
+        [Required]
         [MinLength(2)]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets book's author
+        /// Gets or sets author's surname
         /// </summary>
-        public string Author { get; set; }
+        [Required]
+        [MinLength(2)]
+        public string Surname { get; set; }
     }
 }
