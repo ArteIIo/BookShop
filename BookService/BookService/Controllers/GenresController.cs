@@ -33,33 +33,28 @@ namespace BookService.Controllers
 
         /// <summary>
         /// Get-method for all genre's collection
+        /// GET api/genres
         /// </summary>
         /// <returns>Ok if there is a service with genre</returns>
-        // GET api/genres
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetGenres()
         {
-            if (library == null)
-            {
-                return NotFound();
-            }
-
             return Ok(library.GetAuthors());
         }
 
         /// <summary>
-        /// Get-method for a author by it's index
+        /// Get-method for a author by it's id
+        /// GET api/genres/5
         /// </summary>
         /// <param name="id">Index of the needed genre</param>
-        /// <returns>Ok if there is a genre by such index</returns>
-        // GET api/genres/5
+        /// <returns>Ok if there is a genre by such id</returns>
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetGenre(int id)
         {
             IActionResult result;
             try
             {
-                result = Ok(library.GetGenreByIndex(id));
+                result = Ok(library.GetGenreById(id));
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -71,13 +66,13 @@ namespace BookService.Controllers
 
         /// <summary>
         /// A post method for creation of the new genre
+        /// POST api/genres
         /// </summary>
         /// <param name="genre">Need genre</param>
         /// <returns>CreateAtAction result if author
-        /// has been created or bad request otherwise</returns>
-        // POST api/genres
+        /// has been created or bad request otherwise</returns
         [HttpPost]
-        public IActionResult Post([FromBody] Genre genre)
+        public IActionResult CreateGenre([FromBody] Genre genre)
         {
             if (!ModelState.IsValid)
             {
@@ -91,12 +86,12 @@ namespace BookService.Controllers
 
         /// <summary>
         /// Delete selected genre
+        /// DELETE api/genres/5
         /// </summary>
         /// <param name="id">Index of the selected genre</param>
         /// <returns>Ok if genre has beed deleted</returns>
-        // DELETE api/genres/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult DeleteGenre(int id)
         {
             IActionResult result;
             try
