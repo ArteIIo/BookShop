@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Logic
 {
     /// <summary>
-    /// Interface of the dataprovider abstruction
+    /// Interface for IDataProvider abstruction
     /// </summary>
     public interface IDataProvider
     {
@@ -19,5 +19,23 @@ namespace Logic
         /// </summary>
         /// <returns>Author's list</returns>
         IEnumerable<Author> GetAuthors();
+
+        /// <summary>
+        /// Get genre's list
+        /// </summary>
+        /// <returns>List of genres</returns>
+        IEnumerable<Genre> GetGenres();
+
+        /// <summary>
+        /// Set list of Book-Genre pairs
+        /// </summary>
+        /// <returns>List of Book-Genres pairs</returns>
+        IEnumerable<BookGenre> GetBooksGenres();
+
+        /// <summary>
+        /// Get list of Book-Genre pairs
+        /// </summary>
+        /// <returns>List of Book-Author pairs</returns>
+        IEnumerable<BookAuthor> GetBooksAuthors();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using Logic;
 using Logic.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,7 @@ namespace BookService.Controllers
 {
     /// <summary>
     /// Controller for CRUD opertions
-    /// with books for Task1
+    /// with books
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
@@ -35,27 +36,64 @@ namespace BookService.Controllers
         [HttpGet]
         public IActionResult GetBooks()
         {
-            if (library == null)
-            {
-                return NotFound();
-            }
-
             return Ok(library.GetBooks());
         }
 
         /// <summary>
-        /// Get-method for a book by it's index
+        /// Get-method for a book by it's id
         /// GET api/books/5
         /// </summary>
         /// <param name="id">Index of the needed book</param>
-        /// <returns>Ok if there is a book by such index</returns>
+        /// <returns>Ok if there is a book by such id</returns>
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetBook(int id)
         {
             IActionResult result;
             try
             {
-                result = Ok(library.GetBookByIndex(id));
+                result = Ok(library.GetBookById(id));
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                result = NotFound();
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        ///  Get-method for a book by it's author
+        /// </summary>
+        /// <param name="id">Author's id</param>
+        /// <returns>Ok if there are books with such author</returns>
+        [HttpGet("search-author/{id}")]
+        public IActionResult GetByAuthor(int id)
+        {
+            IActionResult result;
+            try
+            {
+                result = Ok(library.SearchByAuthor(id));
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                result = NotFound();
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        ///  Get-method for a book by it's genre
+        /// </summary>
+        /// <param name="id">Genre's id</param>
+        /// <returns>Ok if there are books with such genre</returns>
+        [HttpGet("search-genre/{id}")]
+        public IActionResult GetByGenre(int id)
+        {
+            IActionResult result;
+            try
+            {
+                result = Ok(library.SearchByGenre(id));
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -73,7 +111,7 @@ namespace BookService.Controllers
         /// <returns>CreateAtAction result if book
         /// has been created or bad request otherwise</returns>
         [HttpPost]
-        public IActionResult Post([FromBody] Book book)
+        public IActionResult Create([FromBody] Book book)
         {
             if (!ModelState.IsValid)
             {
@@ -94,7 +132,7 @@ namespace BookService.Controllers
         /// <returns>CreateAtAction result if book
         /// has been updated or bad request otherwise</returns>
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Book book)
+        public IActionResult UpdateBook(int id, [FromBody] Book book)
         {
             IActionResult result;
             try
@@ -105,7 +143,7 @@ namespace BookService.Controllers
                 }
                 else
                 {
-                    library.SetBookByIndex(book, id);
+                    library.SetBookById(book, id);
                     result = CreatedAtAction("Get", new { id = book.Id }, book);
                 }
             }
@@ -141,20 +179,21 @@ namespace BookService.Controllers
         }
 
         /// <summary>
-        /// Remove book's author
+        /// Update book's genre
         /// </summary>
-        /// <param name=id">Index of the book</param>
+        /// <param name="genreId">Index of the genre</param>
+        /// <param name="bookId">Index of the book</param>
         /// <returns>Ok if operation was successful</returns>
-        [HttpPut("author-remove/{id}")]
-        public IActionResult DeleteAuthor(int id)
+        [HttpPut("genre-update/{genreId}/{bookId}")]
+        public IActionResult UpdateGenre(int genreId, int bookId)
         {
             IActionResult result;
             try
             {
-                library.GetBookByIndex(id).RemoveAuthor();
+                library.UpdateGenre(genreId, bookId);
                 result = Ok();
             }
-            catch (ArgumentOutOfRangeException)
+            catch (IndexOutOfRangeException)
             {
                 result = NotFound();
             }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Logic;
 using Logic.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BookService.Controllers
 {
     /// <summary>
+    /// Controller for author
     /// Controller for CRUD opertions
     /// with authors
     /// </summary>
@@ -29,33 +30,28 @@ namespace BookService.Controllers
 
         /// <summary>
         /// Get-method for all author's collection
-        /// GET api/ authors
+        /// GET api/authors
         /// </summary>
         /// <returns>Ok if there is a service with author</returns>
         [HttpGet]
         public IActionResult GetAuthors()
         {
-            if (library == null)
-            {
-                return NotFound();
-            }
-
             return Ok(library.GetAuthors());
         }
 
         /// <summary>
-        /// Get-method for a author by it's index
-        /// GET api/ authors/5
+        /// Get-method for a author by it's id
+        /// GET api/authors/5
         /// </summary>
         /// <param name="id">Index of the needed author</param>
-        /// <returns>Ok if there is a author by such index</returns>
+        /// <returns>Ok if there is a author by such id</returns>
         [HttpGet("{id}")]
-        public IActionResult GetAuhtor(int id)
+        public IActionResult GetAuthor(int id)
         {
             IActionResult result;
             try
             {
-                result = Ok(library.GetAuthorByIndex(id));
+                result = Ok(library.GetAuthorById(id));
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -67,13 +63,13 @@ namespace BookService.Controllers
 
         /// <summary>
         /// A post method for creation of the new author
-        /// POST api/ Authors
+        /// POST api/authors
         /// </summary>
         /// <param name="author">Need author</param>
         /// <returns>CreateAtAction result if author
         /// has been created or bad request otherwise</returns>
         [HttpPost]
-        public IActionResult Post([FromBody] Author author)
+        public IActionResult CreateAuthor([FromBody] Author author)
         {
             if (!ModelState.IsValid)
             {
@@ -86,15 +82,15 @@ namespace BookService.Controllers
         }
 
         /// <summary>
-        /// Update selected book
-        /// PUT api/books/5
+        /// Update selected author
+        /// PUT api/authors/5
         /// </summary>
-        /// <param name="id">Index of the selected book</param>
-        /// <param name="author">New auhtor's values</param>
+        /// <param name="id">Index of the selected author</param>
+        /// <param name="author">New author's values</param>
         /// <returns>CreateAtAction result if author
         /// has been updated or bad request otherwise</returns>
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Author author)
+        public IActionResult UpdateAuthor(int id, [FromBody] Author author)
         {
             IActionResult result;
             try
@@ -105,7 +101,7 @@ namespace BookService.Controllers
                 }
                 else
                 {
-                    library.SetAuthorByIndex(author, id);
+                    library.SetAuthorById(author, id);
                     result = CreatedAtAction("Get", new { id = author.Id }, author);
                 }
             }
@@ -119,12 +115,12 @@ namespace BookService.Controllers
 
         /// <summary>
         /// Delete selected author
-        /// DELETE api/authors/5
+        /// DELETE api/author/5
         /// </summary>
         /// <param name="id">Index of the selected author</param>
         /// <returns>Ok if author has beed deleted</returns>
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult DeleteAuthor(int id)
         {
             IActionResult result;
             try
