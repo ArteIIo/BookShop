@@ -86,7 +86,7 @@ namespace Logic
         /// <summary>
         /// Set author value by it's id
         /// </summary>
-        /// <param name="author">New author</param>
+        /// <param name="newAuthor">New author</param>
         /// <param name="id">Index of the new book</param>
         /// /// <exception cref="IndexOutOfRangeException">Throw when id out of
         /// list's count range</exception>
@@ -100,7 +100,7 @@ namespace Logic
         /// <summary>
         /// Set book value by it's id
         /// </summary>
-        /// <param name="book">New book</param>
+        /// <param name="newBook">New book</param>
         /// <param name="id">Index of the new book</param>
         /// /// <exception cref="IndexOutOfRangeException">Throw when id out of
         /// list's count range</exception>

@@ -28,7 +28,6 @@ namespace Tests
                 new Author() { Id = 2, Name = "Name1", Surname = "Surname1" },
                 new Author() { Id = 3, Name = "Name2", Surname = "Surname2" },
             };
-
             Mock<IDataProvider> data = new Mock<IDataProvider>();
             data.Setup(p => p.GetAuthors()).Returns(authors);
             ILibrary library = new LibraryCollection(data.Object);
@@ -80,9 +79,9 @@ namespace Tests
                 new Author() { Id = 2, Name = "Name1", Surname = "Surname1" },
                 new Author() { Id = 3, Name = "Name2", Surname = "Surname2" },
             };
-
             Mock<IDataProvider> data = new Mock<IDataProvider>();
             data.Setup(p => p.GetAuthors()).Returns(authors);
+          
             ILibrary library = new LibraryCollection(data.Object);
             Author newAuthor = new Author();
 
@@ -135,9 +134,11 @@ namespace Tests
                 new Author() { Id = 2, Name = "Name1", Surname = "Surname1" },
                 new Author() { Id = 3, Name = "Name2", Surname = "Surname2" },
             };
+            Mock<IDataProvider> data = new Mock<IDataProvider>();
 
             Mock<IDataProvider> data = new Mock<IDataProvider>();
             data.Setup(p => p.GetAuthors()).Returns(authors);
+          
             ILibrary library = new LibraryCollection(data.Object);
 
             // Act
@@ -167,6 +168,7 @@ namespace Tests
                 new BookAuthor() { BookIndex = 1, AuthorIndex = 2 },
                 new BookAuthor() { BookIndex = 1, AuthorIndex = 1 },
             };
+            Mock<IDataProvider> data = new Mock<IDataProvider>();
 
             Mock<IDataProvider> data = new Mock<IDataProvider>();
             data.Setup(p => p.GetAuthors()).Returns(authors);
@@ -197,7 +199,7 @@ namespace Tests
                 new Author() { Id = 2, Name = "Name1", Surname = "Surname1" },
                 new Author() { Id = 3, Name = "Name2", Surname = "Surname2" },
             };
-
+            
             Mock<IDataProvider> data = new Mock<IDataProvider>();
             data.Setup(p => p.GetAuthors()).Returns(authors);
 

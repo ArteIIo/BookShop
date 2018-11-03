@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System;
 using Logic;
 using Logic.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookService.Controllers
 {
     /// <summary>
     /// Controller for author
+    /// Controller for CRUD opertions
+    /// with authors
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]

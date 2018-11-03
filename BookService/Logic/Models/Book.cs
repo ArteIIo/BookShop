@@ -13,6 +13,7 @@ namespace Logic.Models
         /// Gets or sets book's id
         /// </summary>
         [Required]
+        [Range(1, int.MaxValue)]
         public int Id { get; set; }
 
         /// <summary>

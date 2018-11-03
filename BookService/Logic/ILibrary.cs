@@ -9,7 +9,6 @@ namespace Logic
     /// </summary>
     public interface ILibrary
     {
-
         /// <summary>
         /// Gets size of the book's collection
         /// </summary>
@@ -19,7 +18,7 @@ namespace Logic
         /// Gets size of the authors's collection
         /// </summary>
         int AuthorsCount { get; }
-
+      
         /// <summary>
         /// Gets size of the genre's collection
         /// </summary>
