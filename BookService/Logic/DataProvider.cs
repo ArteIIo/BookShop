@@ -40,56 +40,56 @@ namespace Logic
         {
             authors = new List<Author>()
             {
-                new Author() { Id = 0, Name = "Name0", Surname = "Surname0" },
-                new Author() { Id = 1, Name = "Name1", Surname = "Surname1" },
-                new Author() { Id = 2, Name = "Name2", Surname = "Surname2" },
-                new Author() { Id = 3, Name = "Name3", Surname = "Surname3" },
-                new Author() { Id = 4, Name = "Name4", Surname = "Surname4" },
+                new Author() { AuthorId = 1, Name = "Name0", Surname = "Surname0" },
+                new Author() { AuthorId = 2, Name = "Name1", Surname = "Surname1" },
+                new Author() { AuthorId = 3, Name = "Name2", Surname = "Surname2" },
+                new Author() { AuthorId = 4, Name = "Name3", Surname = "Surname3" },
+                new Author() { AuthorId = 5, Name = "Name4", Surname = "Surname4" },
             };
 
             books = new List<Book>()
             {
-                new Book() { Id = 0, Name = "Book0" },
-                new Book() { Id = 1, Name = "Book1" },
+                new Book() { BookId = 1, Name = "Book0" },
+                new Book() { BookId = 2, Name = "Book1" }
             };
 
             genres = new List<Genre>()
             {
-                new Genre() { Id = 0, Name = "Genre0" },
-                new Genre() { Id = 1, Name = "Genre1" },
-                new Genre() { Id = 2, Name = "Genre2" },
-                new Genre() { Id = 3, Name = "Genre3" },
-                new Genre() { Id = 4, Name = "Genre4" },
+                new Genre() { GenreId = 1, Name = "Genre0" },
+                new Genre() { GenreId = 2, Name = "Genre1" },
+                new Genre() { GenreId = 3, Name = "Genre2" },
+                new Genre() { GenreId = 4, Name = "Genre3" },
+                new Genre() { GenreId = 5, Name = "Genre4" },
             };
 
             bookAuthors = new List<BookAuthor>()
             {
-                new BookAuthor() { BookIndex = 0, AuthorIndex = 0 },
-                new BookAuthor() { BookIndex = 0, AuthorIndex = 1 },
+                new BookAuthor() { BookIndex = 1, AuthorIndex = 1 },
                 new BookAuthor() { BookIndex = 1, AuthorIndex = 2 },
-                new BookAuthor() { BookIndex = 1, AuthorIndex = 3 },
-                new BookAuthor() { BookIndex = 1, AuthorIndex = 4 },
-                new BookAuthor() { BookIndex = 0, AuthorIndex = 4 },
+                new BookAuthor() { BookIndex = 2, AuthorIndex = 3 },
+                new BookAuthor() { BookIndex = 2, AuthorIndex = 4 },
+                new BookAuthor() { BookIndex = 2, AuthorIndex = 5 },
+                new BookAuthor() { BookIndex = 1, AuthorIndex = 5 },
             };
 
             bookGenres = new List<BookGenre>()
             {
-                new BookGenre() { BookIndex = 0, GenreIndex = 0 },
-                new BookGenre() { BookIndex = 0, GenreIndex = 1 },
+                new BookGenre() { BookIndex = 1, GenreIndex = 1 },
                 new BookGenre() { BookIndex = 1, GenreIndex = 2 },
-                new BookGenre() { BookIndex = 1, GenreIndex = 3 },
-                new BookGenre() { BookIndex = 1, GenreIndex = 4 },
-                new BookGenre() { BookIndex = 0, GenreIndex = 4 }
+                new BookGenre() { BookIndex = 2, GenreIndex = 3 },
+                new BookGenre() { BookIndex = 2, GenreIndex = 4 },
+                new BookGenre() { BookIndex = 2, GenreIndex = 5 },
+                new BookGenre() { BookIndex = 1, GenreIndex = 5 }
             };
 
-            foreach(Book item in books)
+            foreach (Book item in books)
             {
-                item.Genres = bookGenres;
+                item.GenresList = bookGenres;
             }
 
             foreach (Book item in books)
             {
-                item.Authors = bookAuthors;
+                item.AuthorsList = bookAuthors;
             }
 
             foreach (Author item in authors)

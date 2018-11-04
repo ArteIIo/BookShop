@@ -12,7 +12,8 @@ namespace Logic.Models
         /// Gets or sets author's id
         /// </summary>
         [Required]
-        public int Id { get; set; }
+        [Range(1, int.MaxValue)]
+        public int AuthorId { get; set; }
 
         /// <summary>
         /// Gets or sets author's name

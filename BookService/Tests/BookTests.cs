@@ -1,5 +1,6 @@
 using Logic;
 using Logic.Models;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -25,46 +26,24 @@ namespace Tests
             // Arrange
             List<Book> books = new List<Book>()
             {
-                new Book() { Id = 1, Name = "Book0" },
-                new Book() { Id = 2, Name = "Book1" },
+                new Book() { BookId = 1, Name = "Book0" },
+                new Book() { BookId = 2, Name = "Book1" },
             };
 
-            Mock<IDataProvider> data = new Mock<IDataProvider>();
-            data.Setup(p => p.GetBooks()).Returns(books);
+            var options = new DbContextOptionsBuilder<LibraryDBContext>()
+                  .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                  .Options;
 
-            ILibrary library = new LibraryCollection(data.Object);
+            LibraryDBContext libraryDB = new LibraryDBContext(options);
+            libraryDB.Books.AddRange(books);
+            libraryDB.SaveChanges();
+
+            IBookService bookService = new BookService(libraryDB);
 
             // Act
             // Assert
             Assert.Throws<ArgumentOutOfRangeException>(() =>
-                                                    library.GetBookById(id));
-        }
-
-        /// <summary>
-        /// Test for AddBook-method
-        /// </summary>
-        [Fact]
-        public void Library_AddBook_Correct()
-        {
-            // Arrange
-            List<Book> books = new List<Book>()
-            {
-                new Book() { Id = 1, Name = "Book0" },
-                new Book() { Id = 2, Name = "Book1" },
-            };
-
-            Mock<IDataProvider> data = new Mock<IDataProvider>();
-            data.Setup(p => p.GetBooks()).Returns(books);
-
-            ILibrary library = new LibraryCollection(data.Object);
-            Book newBook = new Book() { Id = 12, Name = "Book12" };
-
-            // Act
-            library.AddBook(newBook);
-            books.Add(newBook);
-
-            // Assert
-            Assert.Equal(books, library.GetBooks());
+                                                    bookService.GetBookById(id));
         }
 
         /// <summary>
@@ -76,20 +55,31 @@ namespace Tests
             // Arrange
             List<Book> books = new List<Book>()
             {
-                new Book() { Id = 1, Name = "Book0" },
-                new Book() { Id = 2, Name = "Book1" },
+                new Book() { BookId = 1, Name = "Book0" },
+                new Book() { BookId = 2, Name = "Book1" },
             };
+
+            var options = new DbContextOptionsBuilder<LibraryDBContext>()
+                  .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                  .Options;
+
+            LibraryDBContext libraryDB = new LibraryDBContext(options);
+            libraryDB.Books.AddRange(books);
+            libraryDB.SaveChanges();
+
+            IBookService bookService = new BookService(libraryDB);
 
             Mock<IDataProvider> data = new Mock<IDataProvider>();
             data.Setup(p => p.GetBooks()).Returns(books);
 
-            ILibrary library = new LibraryCollection(data.Object);
+            IBookService bookServiceMoq = new LibraryCollection(data.Object);
 
             // Act
-            Book book = library.GetBookById(1);
+            Book bookExpected = bookServiceMoq.GetBookById(1);
+            Book bookActual = bookService.GetBookById(1);
 
             // Assert
-            Assert.Equal(books[0], book);
+            Assert.Equal(bookExpected, bookActual);
         }
 
         /// <summary>
@@ -104,20 +94,25 @@ namespace Tests
             // Arrange
             List<Book> books = new List<Book>()
             {
-                new Book() { Id = 1, Name = "Book0" },
-                new Book() { Id = 2, Name = "Book1" },
+                new Book() { BookId = 1, Name = "Book0" },
+                new Book() { BookId = 2, Name = "Book1" },
             };
 
-            Mock<IDataProvider> data = new Mock<IDataProvider>();
-            data.Setup(p => p.GetBooks()).Returns(books);
+            var options = new DbContextOptionsBuilder<LibraryDBContext>()
+                  .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                  .Options;
 
-            ILibrary library = new LibraryCollection(data.Object);
+            LibraryDBContext libraryDB = new LibraryDBContext(options);
+            libraryDB.Books.AddRange(books);
+            libraryDB.SaveChanges();
+
+            IBookService bookService = new BookService(libraryDB);
             Book newBook = new Book();
 
             // Act
             // Assert
             Assert.Throws<ArgumentOutOfRangeException>(() =>
-                                                    library.SetBookById(newBook, id));
+                                                        bookService.SetBookById(newBook, id));
         }
 
         /// <summary>
@@ -129,22 +124,34 @@ namespace Tests
             // Arrange
             List<Book> books = new List<Book>()
             {
-                new Book() { Id = 1, Name = "Book0" },
-                new Book() { Id = 2, Name = "Book1" },
+                new Book() { BookId = 1, Name = "Book0" },
+                new Book() { BookId = 2, Name = "Book1" },
             };
+
+            var options = new DbContextOptionsBuilder<LibraryDBContext>()
+                  .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                  .Options;
+
+            LibraryDBContext libraryDB = new LibraryDBContext(options);
+            libraryDB.Books.AddRange(books);
+            libraryDB.SaveChanges();
+
+            IBookService bookService = new BookService(libraryDB);
 
             Mock<IDataProvider> data = new Mock<IDataProvider>();
             data.Setup(p => p.GetBooks()).Returns(books);
 
-            ILibrary library = new LibraryCollection(data.Object);
-            Book newBook = new Book() { Id = 12, Name = "Book12" };
+            IBookService bookServiceMoq = new LibraryCollection(data.Object);
+            Book newBook = new Book() { BookId = 1, Name = "Book12" };
 
             // Act
-            library.SetBookById(newBook, 1);
-            books[0] = newBook;
+            bookService.SetBookById(newBook, 1);
+            bookServiceMoq.SetBookById(newBook, 1);
 
             // Assert
-            Assert.Equal(books, library.GetBooks());
+            Assert.Equal(bookServiceMoq.GetBookById(1).Name, bookService.GetBookById(1).Name);
+            Assert.Equal(bookServiceMoq.GetBookById(1).AuthorsList, bookService.GetBookById(1).AuthorsList);
+            Assert.Equal(bookServiceMoq.GetBookById(1).GenresList, bookService.GetBookById(1).GenresList);
         }
 
         /// <summary>
@@ -159,19 +166,24 @@ namespace Tests
             // Arrange
             List<Book> books = new List<Book>()
             {
-                new Book() { Id = 1, Name = "Book0" },
-                new Book() { Id = 2, Name = "Book1" },
+                new Book() { BookId = 1, Name = "Book0" },
+                new Book() { BookId = 2, Name = "Book1" },
             };
 
-            Mock<IDataProvider> data = new Mock<IDataProvider>();
-            data.Setup(p => p.GetBooks()).Returns(books);
+            var options = new DbContextOptionsBuilder<LibraryDBContext>()
+                  .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                  .Options;
 
-            ILibrary library = new LibraryCollection(data.Object);
+            LibraryDBContext libraryDB = new LibraryDBContext(options);
+            libraryDB.Books.AddRange(books);
+            libraryDB.SaveChanges();
+
+            IBookService bookService = new BookService(libraryDB);
 
             // Act
             // Assert
             Assert.Throws<ArgumentOutOfRangeException>(() =>
-                                                    library.RemoveBook(id));
+                                                        bookService.RemoveBook(id));
         }
 
         /// <summary>
@@ -183,21 +195,31 @@ namespace Tests
             // Arrange
             List<Book> books = new List<Book>()
             {
-                new Book() { Id = 1, Name = "Book0" },
-                new Book() { Id = 2, Name = "Book1" },
+                new Book() { BookId = 1, Name = "Book0" },
+                new Book() { BookId = 2, Name = "Book1" },
             };
+
+            var options = new DbContextOptionsBuilder<LibraryDBContext>()
+                  .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                  .Options;
+
+            LibraryDBContext libraryDB = new LibraryDBContext(options);
+            libraryDB.Books.AddRange(books);
+            libraryDB.SaveChanges();
+
+            IBookService bookService = new BookService(libraryDB);
 
             Mock<IDataProvider> data = new Mock<IDataProvider>();
             data.Setup(p => p.GetBooks()).Returns(books);
 
-            ILibrary library = new LibraryCollection(data.Object);
+            IBookService bookServiceMoq = new LibraryCollection(data.Object);
 
             // Act
-            library.RemoveBook(1);
-            books.RemoveAt(0);
+            bookServiceMoq.RemoveBook(1);
+            bookService.RemoveBook(1);
 
             // Assert
-            Assert.Equal(books, library.GetBooks());
+            Assert.Equal(bookServiceMoq.GetBooks(), bookService.GetBooks());
         }
 
         /// <summary>
@@ -209,29 +231,40 @@ namespace Tests
             // Arrange
             List<Book> books = new List<Book>()
             {
-                new Book() { Id = 1, Name = "Book0" },
-                new Book() { Id = 2, Name = "Book1" },
+                new Book() { BookId = 1, Name = "Book0" },
+                new Book() { BookId = 2, Name = "Book1" },
             };
             List<BookAuthor> bookAuthors = new List<BookAuthor>()
             {
                 new BookAuthor() { BookIndex = 1, AuthorIndex = 1 },
-                new BookAuthor() { BookIndex = 1, AuthorIndex = 2 },
-                new BookAuthor() { BookIndex = 2, AuthorIndex = 3 },
                 new BookAuthor() { BookIndex = 2, AuthorIndex = 2 },
+                new BookAuthor() { BookIndex = 2, AuthorIndex = 2 },
+                new BookAuthor() { BookIndex = 1, AuthorIndex = 1 },
             };
+
+            var options = new DbContextOptionsBuilder<LibraryDBContext>()
+                  .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                  .Options;
+
+            LibraryDBContext libraryDB = new LibraryDBContext(options);
+            libraryDB.Books.AddRange(books);
+            libraryDB.BookToAuthor.AddRange(bookAuthors);
+            libraryDB.SaveChanges();
+
+            ILibrary bookService = new LibraryService(libraryDB);
 
             Mock<IDataProvider> data = new Mock<IDataProvider>();
             data.Setup(p => p.GetBooks()).Returns(books);
             data.Setup(p => p.GetBooksAuthors()).Returns(bookAuthors);
 
-            ILibrary library = new LibraryCollection(data.Object);
+            ILibrary bookServiceMoq = new LibraryCollection(data.Object);
 
             // Act
-            bookAuthors.Add(new BookAuthor() { BookIndex = 0, AuthorIndex = 2 });
-            library.UpdateAuthor(2, 0);
+            bookServiceMoq.UpdateAuthor(2, 1);
+            bookService.UpdateAuthor(2, 1);
 
             // Assert
-            Assert.Equal(bookAuthors, library.GetBookAuthors());
+            Assert.Equal(bookServiceMoq.GetBookAuthors(), bookService.GetBookAuthors());
         }
 
         /// <summary>
@@ -243,8 +276,8 @@ namespace Tests
             // Arrange
             List<Book> books = new List<Book>()
             {
-                new Book() { Id = 1, Name = "Book0" },
-                new Book() { Id = 2, Name = "Book1" },
+                new Book() { BookId = 1, Name = "Book0" },
+                new Book() { BookId = 2, Name = "Book1" },
             };
             List<BookGenre> bookGenres = new List<BookGenre>()
             {
@@ -254,18 +287,29 @@ namespace Tests
                 new BookGenre() { BookIndex = 2, GenreIndex = 2 }
             };
 
+            var options = new DbContextOptionsBuilder<LibraryDBContext>()
+                  .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                  .Options;
+
+            LibraryDBContext libraryDB = new LibraryDBContext(options);
+            libraryDB.Books.AddRange(books);
+            libraryDB.BookToGenre.AddRange(bookGenres);
+            libraryDB.SaveChanges();
+
+            ILibrary bookService = new LibraryService(libraryDB);
+
             Mock<IDataProvider> data = new Mock<IDataProvider>();
             data.Setup(p => p.GetBooks()).Returns(books);
             data.Setup(p => p.GetBooksGenres()).Returns(bookGenres);
 
-            ILibrary library = new LibraryCollection(data.Object);
+            ILibrary bookServiceMoq = new LibraryCollection(data.Object);
 
             // Act
-            bookGenres.Add(new BookGenre() { BookIndex = 0, GenreIndex = 2 });
-            library.UpdateGenre(2, 0);
+            bookService.UpdateGenre(2, 1);
+            bookServiceMoq.UpdateGenre(2, 1);
 
             // Assert
-            Assert.Equal(bookGenres, library.GetBookGenres());
+            Assert.Equal(bookServiceMoq.GetBookGenres(), bookService.GetBookGenres());
         }
 
         /// <summary>
@@ -277,8 +321,8 @@ namespace Tests
             // Arrange
             List<Book> books = new List<Book>()
             {
-                new Book() { Id = 1, Name = "Book0" },
-                new Book() { Id = 2, Name = "Book1" },
+                new Book() { BookId = 1, Name = "Book0" },
+                new Book() { BookId = 2, Name = "Book1" },
             };
             List<BookGenre> bookGenres = new List<BookGenre>()
             {
@@ -288,16 +332,26 @@ namespace Tests
                 new BookGenre() { BookIndex = 2, GenreIndex = 2 }
             };
 
+            var options = new DbContextOptionsBuilder<LibraryDBContext>()
+                  .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                  .Options;
+
+            LibraryDBContext libraryDB = new LibraryDBContext(options);
+            libraryDB.Books.AddRange(books);
+            libraryDB.BookToGenre.AddRange(bookGenres);
+            libraryDB.SaveChanges();
+
+            ILibrary bookService = new LibraryService(libraryDB);
+
             Mock<IDataProvider> data = new Mock<IDataProvider>();
             data.Setup(p => p.GetBooks()).Returns(books);
             data.Setup(p => p.GetBooksGenres()).Returns(bookGenres);
 
-            ILibrary library = new LibraryCollection(data.Object);
+            ILibrary bookServiceMoq = new LibraryCollection(data.Object);
 
             // Act
-            var expectedBooks = bookGenres.Where(item => item.GenreIndex == 0)
-                                          .Select(item => books[item.BookIndex]);
-            IEnumerable<Book> actualBooks = library.SearchByGenre(0);
+            var expectedBooks = bookServiceMoq.SearchByGenre(1);
+            var actualBooks = bookService.SearchByGenre(1);
 
             // Assert
             Assert.Equal(expectedBooks, actualBooks);
@@ -312,8 +366,8 @@ namespace Tests
             // Arrange
             List<Book> books = new List<Book>()
             {
-                new Book() { Id = 1, Name = "Book0" },
-                new Book() { Id = 2, Name = "Book1" },
+                new Book() { BookId = 1, Name = "Book0" },
+                new Book() { BookId = 2, Name = "Book1" },
             };
             List<BookAuthor> bookAuthors = new List<BookAuthor>()
             {
@@ -323,16 +377,26 @@ namespace Tests
                 new BookAuthor() { BookIndex = 2, AuthorIndex = 2 },
             };
 
+            var options = new DbContextOptionsBuilder<LibraryDBContext>()
+                  .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                  .Options;
+
+            LibraryDBContext libraryDB = new LibraryDBContext(options);
+            libraryDB.Books.AddRange(books);
+            libraryDB.BookToAuthor.AddRange(bookAuthors);
+            libraryDB.SaveChanges();
+
+            ILibrary bookService = new LibraryService(libraryDB);
+
             Mock<IDataProvider> data = new Mock<IDataProvider>();
             data.Setup(p => p.GetBooks()).Returns(books);
             data.Setup(p => p.GetBooksAuthors()).Returns(bookAuthors);
 
-            ILibrary library = new LibraryCollection(data.Object);
+            ILibrary bookServiceMoq = new LibraryCollection(data.Object);
 
             // Act
-            IEnumerable<Book> expectedBooks = bookAuthors.Where(item => item.AuthorIndex == 0)
-                                                        .Select(item => books[item.BookIndex]);
-            IEnumerable<Book> actualBooks = library.SearchByAuthor(0);
+            IEnumerable<Book> expectedBooks = bookServiceMoq.SearchByAuthor(1);
+            IEnumerable<Book> actualBooks = bookService.SearchByAuthor(1);
 
             // Assert
             Assert.Equal(expectedBooks, actualBooks);

@@ -7,7 +7,7 @@ using Logic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookService.Controllers
+namespace BookApi.Controllers
 {
     /// <summary>
     /// Controller for CRUD opertions
@@ -20,15 +20,15 @@ namespace BookService.Controllers
         /// <summary>
         /// Service with genre collection
         /// </summary>
-        private ILibrary library;
+        private IGenreService genres;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenresController"/> class.
         /// </summary>
-        /// <param name="library">Service with genre's collection</param>
-        public GenresController(ILibrary library)
+        /// <param name="genres">Service with genre's collection</param>
+        public GenresController(IGenreService genres)
         {
-            this.library = library;
+            this.genres = genres;
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace BookService.Controllers
         [HttpGet]
         public IActionResult GetGenres()
         {
-            return Ok(library.GetAuthors());
+            return Ok(genres.GetGenres());
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace BookService.Controllers
             IActionResult result;
             try
             {
-                result = Ok(library.GetGenreById(id));
+                result = Ok(genres.GetGenreById(id));
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -79,9 +79,9 @@ namespace BookService.Controllers
                 return BadRequest();
             }
 
-            library.AddGenre(genre);
+            genres.AddGenre(genre);
 
-            return CreatedAtAction("Get", new { id = genre.Id }, genre);
+            return CreatedAtAction("Get", new { id = genre.GenreId }, genre);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace BookService.Controllers
             IActionResult result;
             try
             {
-                Genre deleted = library.RemoveGenre(id);
+                Genre deleted = genres.RemoveGenre(id);
                 if (deleted != null)
                 {
                     result = Ok(deleted);

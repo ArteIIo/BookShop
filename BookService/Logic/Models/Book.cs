@@ -14,7 +14,7 @@ namespace Logic.Models
         /// </summary>
         [Required]
         [Range(1, int.MaxValue)]
-        public int Id { get; set; }
+        public int BookId { get; set; }
 
         /// <summary>
         /// Gets or sets book's name
@@ -26,20 +26,20 @@ namespace Logic.Models
         /// <summary>
         /// Gets or sets book's authors
         /// </summary>
-        public List<BookAuthor> Authors { get; set; }
+        public List<BookAuthor> AuthorsList { get; set; }
 
         /// <summary>
         /// Gets or sets book's genres
         /// </summary>
-        public List<BookGenre> Genres { get; set; }
+        public List<BookGenre> GenresList { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Book"/> class.
         /// </summary>
         public Book()
         {
-            Authors = new List<BookAuthor>();
-            Genres = new List<BookGenre>();
+            AuthorsList = new List<BookAuthor>();
+            GenresList = new List<BookGenre>();
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Logic.Models
         /// </summary>
         public void RemoveAuthor()
         {
-            Authors = null;
+            AuthorsList = null;
         }
     }
 }

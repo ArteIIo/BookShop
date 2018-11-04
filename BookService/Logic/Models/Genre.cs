@@ -12,7 +12,8 @@ namespace Logic.Models
         /// Gets or sets genre's id
         /// </summary>
         [Required]
-        public int Id { get; set; }
+        [Range(1, int.MaxValue)]
+        public int GenreId { get; set; }
 
         /// <summary>
         /// Gets or sets genre's name

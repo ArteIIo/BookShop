@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using AutoMapper;
+using BookApi.Views;
 using Logic;
 using Logic.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookService.Controllers
+namespace BookApi.Controllers
 {
     /// <summary>
     /// Controller for CRUD opertions
@@ -15,17 +17,23 @@ namespace BookService.Controllers
     public class BooksController : ControllerBase
     {
         /// <summary>
-        /// Service with books collection
+        /// Service with libarary operations
         /// </summary>
         private ILibrary library;
+
+        /// <summary>
+        /// Service for book operations
+        /// </summary>
+        private IBookService books;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BooksController"/> class.
         /// </summary>
         /// <param name="library">Service with book's collection</param>
-        public BooksController(ILibrary library)
+        public BooksController(ILibrary library, IBookService books)
         {
             this.library = library;
+            this.books = books;
         }
 
         /// <summary>
@@ -36,7 +44,7 @@ namespace BookService.Controllers
         [HttpGet]
         public IActionResult GetBooks()
         {
-            return Ok(library.GetBooks());
+            return Ok(books.GetBooks());
         }
 
         /// <summary>
@@ -51,7 +59,7 @@ namespace BookService.Controllers
             IActionResult result;
             try
             {
-                result = Ok(library.GetBookById(id));
+                result = Ok(books.GetBookById(id));
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -118,9 +126,9 @@ namespace BookService.Controllers
                 return BadRequest();
             }
 
-            library.AddBook(book);
+            books.AddBook(book);
 
-            return CreatedAtAction("Get", new { id = book.Id }, book);
+            return CreatedAtAction("Get", new { id = book.BookId }, book);
         }
 
         /// <summary>
@@ -143,8 +151,8 @@ namespace BookService.Controllers
                 }
                 else
                 {
-                    library.SetBookById(book, id);
-                    result = CreatedAtAction("Get", new { id = book.Id }, book);
+                    books.SetBookById(book, id);
+                    result = CreatedAtAction("Get", new { id = book.BookId }, book);
                 }
             }
             catch (ArgumentOutOfRangeException)
@@ -213,7 +221,7 @@ namespace BookService.Controllers
             IActionResult result;
             try
             {
-                Book deleted = library.RemoveBook(id);
+                Book deleted = books.RemoveBook(id);
                 result = Ok(deleted);
             }
             catch (ArgumentOutOfRangeException)

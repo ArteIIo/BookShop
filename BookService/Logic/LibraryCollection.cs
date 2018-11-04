@@ -8,7 +8,7 @@ namespace Logic
     /// <summary>
     /// Class-realization of the book's collection
     /// </summary>
-    public class LibraryCollection : ILibrary
+    public class LibraryCollection : ILibrary, IBookService, IAuthorService, IGenreService
     {
         /// <summary>
         /// List with books
@@ -56,7 +56,7 @@ namespace Logic
         /// list's count range</exception>
         public Author GetAuthorById(int id)
         {
-            Author author = authors.Find(item => item.Id == id);
+            Author author = authors.Find(item => item.AuthorId == id);
             if (author == null)
             {
                 throw new ArgumentOutOfRangeException();
@@ -74,7 +74,7 @@ namespace Logic
         /// list's count range</exception>
         public Book GetBookById(int id)
         {
-            Book book = books.Find(item => item.Id == id);
+            Book book = books.Find(item => item.BookId == id);
             if (book == null)
             {
                 throw new ArgumentOutOfRangeException();
@@ -92,7 +92,7 @@ namespace Logic
         /// list's count range</exception>
         public void SetAuthorById(Author author, int id)
         {
-            Author currAuthor = authors.Find(item => item.Id == id);
+            Author currAuthor = authors.Find(item => item.AuthorId == id);
             id = authors.IndexOf(currAuthor);
             authors[id] = author;
         }
@@ -102,11 +102,11 @@ namespace Logic
         /// </summary>
         /// <param name="newBook">New book</param>
         /// <param name="id">Index of the new book</param>
-        /// /// <exception cref="IndexOutOfRangeException">Throw when id out of
+        /// /// <exception cref="ArgumentOutOfRangeException">Throw when id out of
         /// list's count range</exception>
         public void SetBookById(Book book, int id)
         {
-            Book currBook = books.Find(item => item.Id == id);
+            Book currBook = books.Find(item => item.BookId == id);
             id = books.IndexOf(currBook);
             books[id] = book;
         }
@@ -161,7 +161,7 @@ namespace Logic
         /// <exception cref="System.IndexOutOfRangeException">Throw if id out of range</exception>
         public Book RemoveBook(int id)
         {
-            Book deleted = books.Find(item => item.Id == id);
+            Book deleted = books.Find(item => item.BookId == id);
             id = books.IndexOf(deleted);
             books.RemoveAt(id);
 
@@ -185,9 +185,9 @@ namespace Logic
         /// <exception cref="ArgumentOutOfRangeException">Throw if id out of range</exception>
         public Author RemoveAuthor(int id)
         {
-            Author author = authors.Find(item => item.Id == id);
-            bookAuthors.RemoveAll(items => authors[items.AuthorIndex] == author);
-            authors.RemoveAt(id);
+            Author author = authors.Find(item => item.AuthorId == id);
+            bookAuthors.RemoveAll(items => items.AuthorIndex == author.AuthorId);
+            authors.Remove(author);
 
             return author;
         }
@@ -206,7 +206,8 @@ namespace Logic
             {
                 bookAuthors.Add(new BookAuthor()
                 {
-                    BookIndex = bookId, AuthorIndex = authorId
+                    BookIndex = bookId,
+                    AuthorIndex = authorId
                 });
             }
         }
@@ -230,7 +231,7 @@ namespace Logic
             var gettedBooksGenres = bookGenres.Where(item => item.GenreIndex == genreIndex)
                                               .Select(item => item.BookIndex);
 
-            var gettedBooks = books.Where(item => gettedBooksGenres.Contains(item.Id));
+            var gettedBooks = books.Where(item => gettedBooksGenres.Contains(item.BookId));
 
             return gettedBooks;
         }
@@ -245,7 +246,7 @@ namespace Logic
             var gettedBooksAuthors = bookAuthors.Where(item => item.AuthorIndex == authorIndex)
                                               .Select(item => item.BookIndex);
 
-            var gettedBooks = books.Where(item => gettedBooksAuthors.Contains(item.Id));
+            var gettedBooks = books.Where(item => gettedBooksAuthors.Contains(item.BookId));
 
             return gettedBooks;
         }
@@ -259,13 +260,13 @@ namespace Logic
         /// list's count range</exception>
         public Genre GetGenreById(int id)
         {
-            Genre genre = genres.Find(item => item.Id == id);
+            Genre genre = genres.Find(item => item.GenreId == id);
             if (genre == null)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
-            return genres.Find(item => item.Id == id);
+            return genres.Find(item => item.GenreId == id);
         }
 
         /// <summary>
@@ -288,7 +289,7 @@ namespace Logic
             Genre deletedGenre = null;
             if (bookGenres.FindAll(items => items.GenreIndex == id).Count == 0)
             {
-                deletedGenre = genres.Find(item => item.Id == id);
+                deletedGenre = genres.Find(item => item.GenreId == id);
                 if (deletedGenre == null)
                 {
                     throw new ArgumentOutOfRangeException();

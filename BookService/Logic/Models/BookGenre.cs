@@ -8,6 +8,11 @@ namespace Logic.Models
     public class BookGenre
     {
         /// <summary>
+        /// BookToGenre's id
+        /// </summary>
+        public int BookGenreId { get; set; }
+
+        /// <summary>
         /// Gets or sets book
         /// </summary>
         public int BookIndex { get; set; }

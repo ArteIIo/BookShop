@@ -3,7 +3,7 @@ using Logic;
 using Logic.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookService.Controllers
+namespace BookApi.Controllers
 {
     /// <summary>
     /// Controller for author
@@ -17,15 +17,15 @@ namespace BookService.Controllers
         /// <summary>
         /// Service with authors collection
         /// </summary>
-        private ILibrary library;
+        private IAuthorService authors;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthorsController"/> class.
         /// </summary>
-        /// <param name="library">Service with author's collection</param>
-        public AuthorsController(ILibrary library)
+        /// <param name="authors">Service with author's collection</param>
+        public AuthorsController(IAuthorService authors)
         {
-            this.library = library;
+            this.authors = authors;
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace BookService.Controllers
         [HttpGet]
         public IActionResult GetAuthors()
         {
-            return Ok(library.GetAuthors());
+            return Ok(authors.GetAuthors());
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace BookService.Controllers
             IActionResult result;
             try
             {
-                result = Ok(library.GetAuthorById(id));
+                result = Ok(authors.GetAuthorById(id));
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -76,9 +76,9 @@ namespace BookService.Controllers
                 return BadRequest();
             }
 
-            library.AddAuthor(author);
+            authors.AddAuthor(author);
 
-            return CreatedAtAction("Get", new { id = author.Id }, author);
+            return CreatedAtAction("Get", new { id = author.AuthorId }, author);
         }
 
         /// <summary>
@@ -101,8 +101,8 @@ namespace BookService.Controllers
                 }
                 else
                 {
-                    library.SetAuthorById(author, id);
-                    result = CreatedAtAction("Get", new { id = author.Id }, author);
+                    authors.SetAuthorById(author, id);
+                    result = CreatedAtAction("Get", new { id = author.AuthorId }, author);
                 }
             }
             catch (ArgumentOutOfRangeException)
@@ -125,7 +125,7 @@ namespace BookService.Controllers
             IActionResult result;
             try
             {
-                Author deleted = library.RemoveAuthor(id);
+                Author deleted = authors.RemoveAuthor(id);
                 result = Ok(deleted);
             }
             catch (ArgumentOutOfRangeException)

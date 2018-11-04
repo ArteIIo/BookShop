@@ -12,6 +12,11 @@ namespace Logic.Models
     public class BookAuthor
     {
         /// <summary>
+        /// BookToAuthor's id
+        /// </summary>
+        public int BookAuthorId { get; set; }
+
+        /// <summary>
         /// Gets or sets book
         /// </summary>
         public int BookIndex{ get; set; }
